@@ -1,0 +1,15 @@
+.git
+.gitignore
+.idea
+README*
+*.iml
+.DS_Store
+.editorconfig
+.gitlab-ci.yml
+docker-compose.yml
+*.log
+/vendor/*
+/config/app.php
+/tmp/*
+/logs/*
+/config/Migrations/*.lock

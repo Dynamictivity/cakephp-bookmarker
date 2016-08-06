@@ -1,0 +1,35 @@
+before_script:
+  - docker info
+
+stages:
+  - build
+  - deploy
+  - clean_up
+
+build:
+  stage: build
+  script:
+    - docker build -t cakephp-bookmarker .
+  tags:
+    - docker-build
+
+deploy:
+  stage: deploy
+  script:
+    - docker tag cakephp-bookmarker $( echo $DOCKER_CLOUD_REPO )
+    - docker login --username=$DOCKER_CLOUD_USERNAME --email=$DOCKER_CLOUD_EMAIL --password=$DOCKER_CLOUD_PASSWORD
+    - docker push $DOCKER_CLOUD_REPO
+  only:
+    - master
+    - dev
+  when: on_success
+  tags:
+    - docker-build
+
+clean_up:
+  stage: clean_up
+  script:
+    - docker rm $(docker ps -a | grep cakephp-bookmarker | awk '{print $1}') || true
+    - docker rmi -f $(docker images | grep cakephp-bookmarker | awk '{print $3}') || true
+  tags:
+    - docker-build
