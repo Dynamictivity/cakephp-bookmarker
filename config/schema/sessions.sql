@@ -7,8 +7,7 @@
 
 CREATE TABLE sessions (
   id varchar(40) NOT NULL default '',
-  data BLOB,
+  data text,
   expires INT(11) NOT NULL,
   PRIMARY KEY  (id)
 );
-ALTER TABLE sessions MODIFY COLUMN data BLOB;
