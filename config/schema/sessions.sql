@@ -11,3 +11,4 @@ CREATE TABLE sessions (
   expires INT(11) NOT NULL,
   PRIMARY KEY  (id)
 );
+ALTER TABLE sessions MODIFY COLUMN data BLOB;
