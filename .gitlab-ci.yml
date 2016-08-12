@@ -29,7 +29,7 @@ deploy:
 clean_up:
   stage: clean_up
   script:
-    - docker rm $(docker ps -a | grep cakephp-bookmarker | awk '{print $1}') || true
-    - docker rmi -f $(docker images | grep cakephp-bookmarker | awk '{print $3}') || true
+    - docker rm $(docker ps -a -q) || true
+    - docker rmi $(docker images | awk '/^<none>/ { print $3 }') || true
   tags:
     - docker-build
