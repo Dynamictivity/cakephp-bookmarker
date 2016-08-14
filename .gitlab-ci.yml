@@ -9,19 +9,18 @@ stages:
 build:
   stage: build
   script:
-    - docker build -t cakephp-bookmarker .
+    - docker build -t ${CI_PROJECT_NAME} .
   tags:
     - docker-build
 
 deploy:
   stage: deploy
   script:
-    - docker tag cakephp-bookmarker $( echo $DOCKER_CLOUD_REPO )
+    - docker tag ${CI_PROJECT_NAME} $( echo $DOCKER_CLOUD_REPO )
     - docker login --username=$DOCKER_CLOUD_USERNAME --email=$DOCKER_CLOUD_EMAIL --password=$DOCKER_CLOUD_PASSWORD
     - docker push $DOCKER_CLOUD_REPO
   only:
     - master
-    - dev
   when: on_success
   tags:
     - docker-build
