@@ -4,7 +4,6 @@ before_script:
 stages:
   - build
   - deploy
-  - clean_up
 
 build:
   stage: build
@@ -22,13 +21,5 @@ deploy:
   only:
     - master
   when: on_success
-  tags:
-    - docker-build
-
-clean_up:
-  stage: clean_up
-  script:
-    - docker rm $(docker ps -a -q) || true
-    - docker rmi $(docker images | awk '/^<none>/ { print $3 }') || true
   tags:
     - docker-build
